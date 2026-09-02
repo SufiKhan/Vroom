@@ -1,0 +1,43 @@
+package com.example.trading.vroom.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
+import reactor.core.publisher.Mono;
+
+@Component
+public class VroomApiKeyWebFilter implements WebFilter {
+
+    private final String expectedApiKey;
+
+    public VroomApiKeyWebFilter(@Value("${vroom.api-key:default-secret-key}") String expectedApiKey) {
+        System.out.println("Expected API key: " + expectedApiKey);
+        this.expectedApiKey = expectedApiKey;
+    }
+
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        String path = exchange.getRequest().getPath().value();
+        // Debugging line to print the request path
+        if (requiresApiKey(path)) {
+            String requestApiKey = exchange.getRequest().getHeaders().getFirst("X-API-KEY");
+            if (requestApiKey == null || !requestApiKey.equals(expectedApiKey)) {
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                exchange.getResponse().getHeaders().add("X-Error", "Missing or invalid X-API-KEY");
+                return exchange.getResponse().setComplete();
+            }
+        }
+
+        return chain.filter(exchange);
+    }
+
+    private boolean requiresApiKey(String path) {
+        return path.startsWith("/api/orders")
+                || path.startsWith("/api/accounts")
+                || path.startsWith("/api/wallet") 
+                || path.startsWith("/api/market-data/stream");
+    }
+}

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trading Vroom Dashboard</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel-alt: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --accent: #60a5fa;
+      --shadow: rgba(15, 23, 42, 0.5);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, var(--bg), #020617);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 20px 40px;
+    }
+
+    h1 {
+      margin-bottom: 8px;
+      font-size: 2.4rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 24px;
+    }
+
+    .panel {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 14px;
+      box-shadow: 0 10px 30px var(--shadow);
+      padding: 20px;
+    }
+
+    .price-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(96, 165, 250, 0.15);
+      color: var(--text);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+    }
+
+    .tick-up {
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .tick-down {
+      color: var(--danger);
+      font-weight: 700;
+    }
+
+    #tickStream {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 360px;
+      overflow-y: auto;
+    }
+
+    #tickStream li {
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: var(--panel-alt);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      color: var(--text);
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    input, select, button {
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      padding: 10px 12px;
+      font-size: 1rem;
+      background: #0b1220;
+      color: var(--text);
+    }
+
+    button {
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .response {
+      margin-top: 16px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      border-radius: 10px;
+      min-height: 120px;
+      padding: 12px;
+      white-space: pre-wrap;
+      color: var(--text);
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Trading Vroom Dashboard</h1>
+    <div class="subtitle">Live market feed with browser-native SSE and REST submission</div>
+
+    <div class="layout">
+      <section class="panel">
+        <div id="marketState" class="price-pill">Waiting for market data…</div>
+        <ul id="tickStream"></ul>
+      </section>
+
+      <aside class="panel">
+        <h2>Submit Limit Order</h2>
+        <form id="orderForm">
+          <label class="field">
+            User ID
+            <input name="userId" value="user_1" required />
+          </label>
+
+          <label class="field">
+            Symbol
+            <input name="symbol" value="VROOM" required />
+          </label>
+
+          <label class="field">
+            Side
+            <select name="side">
+              <option value="BUY">BUY</option>
+              <option value="SELL">SELL</option>
+            </select>
+          </label>
+
+          <label class="field">
+            Quantity
+            <input name="quantity" type="number" min="1" step="1" value="1" required />
+          </label>
+
+          <label class="field">
+            Limit Price
+            <input name="limitPrice" type="number" min="0.01" step="0.01" value="150.00" required />
+          </label>
+
+          <button type="submit">Send order</button>
+        </form>
+
+        <div id="response" class="response">No order submitted yet.</div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const stream = new EventSource('/api/market-data/stream');
+    const tickList = document.getElementById('tickStream');
+    const marketState = document.getElementById('marketState');
+    const responseBox = document.getElementById('response');
+    let previousPrice = null;
+
+    stream.onmessage = (event) => {
+      const tick = JSON.parse(event.data);
+      const nextPrice = Number(tick.price);
+
+      const priceText = `$${Number(nextPrice).toFixed(2)}`;
+      if (previousPrice === null) {
+        marketState.textContent = `Current: ${priceText}`;
+      } else if (nextPrice > previousPrice) {
+        marketState.textContent = `↑ ${priceText}`;
+        marketState.classList.add('tick-up');
+        marketState.classList.remove('tick-down');
+      } else if (nextPrice < previousPrice) {
+        marketState.textContent = `↓ ${priceText}`;
+        marketState.classList.add('tick-down');
+        marketState.classList.remove('tick-up');
+      }
+
+      const item = document.createElement('li');
+      item.className = previousPrice !== null && nextPrice > previousPrice ? 'tick-up' : previousPrice !== null && nextPrice < previousPrice ? 'tick-down' : '';
+      item.textContent = `${new Date(tick.timestamp).toLocaleTimeString()} • ${tick.symbol} • ${priceText} • qty ${tick.quantity}`;
+      tickList.prepend(item);
+
+      while (tickList.children.length > 12) {
+        tickList.removeChild(tickList.lastChild);
+      }
+
+      previousPrice = nextPrice;
+    };
+
+    stream.onerror = () => {
+      marketState.textContent = 'Market feed interrupted';
+    };
+
+    document.getElementById('orderForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const payload = {
+        userId: form.userId.value,
+        symbol: form.symbol.value,
+        side: form.side.value,
+        quantity: Number(form.quantity.value),
+        limitPrice: Number(form.limitPrice.value)
+      };
+
+      try {
+        const response = await fetch('/api/orders/limit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-API-KEY': 'vroom-access-key'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.text();
+        responseBox.textContent = result;
+      } catch (error) {
+        responseBox.textContent = `Submission failed: ${error.message}`;
+      }
+    });
+  </script>
+</body>
+</html>
