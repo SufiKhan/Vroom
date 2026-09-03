@@ -14,7 +14,6 @@ public class VroomApiKeyWebFilter implements WebFilter {
     private final String expectedApiKey;
 
     public VroomApiKeyWebFilter(@Value("${vroom.api-key:default-secret-key}") String expectedApiKey) {
-        System.out.println("Expected API key: " + expectedApiKey);
         this.expectedApiKey = expectedApiKey;
     }
 
