@@ -1,10 +1,12 @@
-package com.trading.vroom.service;
+package com.example.trading.vroom.service;
 
 import com.trading.vroom.domain.MarketTick;
 import com.trading.vroom.domain.OrderSide;
 import com.trading.vroom.domain.UserAccount;
 import com.trading.vroom.infrastructure.InMemoryAccountRepository;
 import com.trading.vroom.infrastructure.InMemoryOrderBookRepository;
+import com.trading.vroom.service.MatchingEngineService;
+
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

@@ -1,6 +1,8 @@
-package com.trading.vroom.service;
+package com.example.trading.vroom.service;
 
 import com.trading.vroom.config.MarketSimulationProperties;
+import com.trading.vroom.service.RandomWalkPriceEvolutionStrategy;
+
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

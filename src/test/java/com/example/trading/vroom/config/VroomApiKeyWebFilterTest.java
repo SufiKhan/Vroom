@@ -1,10 +1,13 @@
-package com.trading.vroom.config;
+package com.example.trading.vroom.config;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
 import org.springframework.mock.web.server.MockServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
+
+import com.trading.vroom.config.VroomApiKeyWebFilter;
+
 import reactor.core.publisher.Mono;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
