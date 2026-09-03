@@ -1,4 +1,4 @@
-package com.example.trading.vroom.domain;
+package com.trading.vroom.domain;
 
 public enum OrderSide {
     BUY,

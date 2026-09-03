@@ -1,7 +1,7 @@
-package com.example.trading.vroom.api;
+package com.trading.vroom.api;
 
-import com.example.trading.vroom.api.dto.MarketTickResponse;
-import com.example.trading.vroom.ports.MarketDataPublisher;
+import com.trading.vroom.api.dto.MarketTickResponse;
+import com.trading.vroom.ports.MarketDataPublisher;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

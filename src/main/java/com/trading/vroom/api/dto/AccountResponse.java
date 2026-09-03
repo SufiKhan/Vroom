@@ -1,4 +1,4 @@
-package com.example.trading.vroom.api.dto;
+package com.trading.vroom.api.dto;
 
 import java.math.BigDecimal;
 import java.util.Map;

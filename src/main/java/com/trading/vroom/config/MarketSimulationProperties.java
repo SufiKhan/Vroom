@@ -1,4 +1,4 @@
-package com.example.trading.vroom.config;
+package com.trading.vroom.config;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;

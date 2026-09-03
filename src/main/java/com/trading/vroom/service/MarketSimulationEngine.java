@@ -1,8 +1,8 @@
-package com.example.trading.vroom.service;
+package com.trading.vroom.service;
 
-import com.example.trading.vroom.config.MarketSimulationProperties;
-import com.example.trading.vroom.domain.MarketTick;
-import com.example.trading.vroom.ports.MarketDataPublisher;
+import com.trading.vroom.config.MarketSimulationProperties;
+import com.trading.vroom.domain.MarketTick;
+import com.trading.vroom.ports.MarketDataPublisher;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Service;

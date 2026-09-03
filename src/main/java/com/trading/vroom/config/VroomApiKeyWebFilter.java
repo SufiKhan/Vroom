@@ -1,4 +1,4 @@
-package com.example.trading.vroom.config;
+package com.trading.vroom.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -19,8 +19,11 @@ public class VroomApiKeyWebFilter implements WebFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        if (exchange.getRequest().getMethod() == org.springframework.http.HttpMethod.OPTIONS) {
+            return chain.filter(exchange);
+        }
+
         String path = exchange.getRequest().getPath().value();
-        // Debugging line to print the request path
         if (requiresApiKey(path)) {
             String requestApiKey = exchange.getRequest().getHeaders().getFirst("X-API-KEY");
             if (requestApiKey == null || !requestApiKey.equals(expectedApiKey)) {

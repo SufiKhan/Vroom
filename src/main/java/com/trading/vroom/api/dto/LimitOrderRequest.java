@@ -1,6 +1,6 @@
-package com.example.trading.vroom.api.dto;
+package com.trading.vroom.api.dto;
 
-import com.example.trading.vroom.domain.OrderSide;
+import com.trading.vroom.domain.OrderSide;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

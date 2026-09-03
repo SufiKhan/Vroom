@@ -1,7 +1,7 @@
-package com.example.trading.vroom.infrastructure;
+package com.trading.vroom.infrastructure;
 
-import com.example.trading.vroom.domain.UserAccount;
-import com.example.trading.vroom.ports.AccountRepository;
+import com.trading.vroom.domain.UserAccount;
+import com.trading.vroom.ports.AccountRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

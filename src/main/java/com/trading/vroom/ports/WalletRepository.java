@@ -1,6 +1,6 @@
-package com.example.trading.vroom.ports;
+package com.trading.vroom.ports;
 
-import com.example.trading.vroom.domain.UserAccount;
+import com.trading.vroom.domain.UserAccount;
 
 import java.math.BigDecimal;
 import java.util.Optional;

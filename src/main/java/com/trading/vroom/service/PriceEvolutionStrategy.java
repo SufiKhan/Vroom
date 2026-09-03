@@ -1,4 +1,4 @@
-package com.example.trading.vroom.service;
+package com.trading.vroom.service;
 
 import java.math.BigDecimal;
 

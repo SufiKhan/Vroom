@@ -1,8 +1,8 @@
-package com.example.trading.vroom.infrastructure;
+package com.trading.vroom.infrastructure;
 
-import com.example.trading.vroom.domain.LimitOrder;
-import com.example.trading.vroom.domain.OrderSide;
-import com.example.trading.vroom.ports.OrderBookRepository;
+import com.trading.vroom.domain.LimitOrder;
+import com.trading.vroom.domain.OrderSide;
+import com.trading.vroom.ports.OrderBookRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;

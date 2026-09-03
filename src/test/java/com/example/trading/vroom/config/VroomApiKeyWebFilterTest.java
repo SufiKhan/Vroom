@@ -1,4 +1,4 @@
-package com.example.trading.vroom.config;
+package com.trading.vroom.config;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -29,6 +29,36 @@ class VroomApiKeyWebFilterTest {
         MockServerWebExchange exchange = MockServerWebExchange.from(
                 MockServerHttpRequest.post("/api/orders/limit")
                         .header("X-API-KEY", "vroom-access-key")
+                        .build()
+        );
+
+        filter.filter(exchange, chainFor(exchange)).block();
+
+        assertEquals(HttpStatus.OK, exchange.getResponse().getStatusCode());
+    }
+
+    @Test
+    void allowsCorsPreflightRequestsWithoutApiKey() {
+        VroomApiKeyWebFilter filter = new VroomApiKeyWebFilter("vroom-access-key");
+        MockServerWebExchange exchange = MockServerWebExchange.from(
+                MockServerHttpRequest.options("/api/orders/limit")
+                        .header("Origin", "http://localhost:5173")
+                        .header("Access-Control-Request-Method", "POST")
+                        .build()
+        );
+
+        filter.filter(exchange, chainFor(exchange)).block();
+
+        assertEquals(HttpStatus.OK, exchange.getResponse().getStatusCode());
+    }
+
+    @Test
+    void allowsNullOriginForLocalFilePage() {
+        VroomApiKeyWebFilter filter = new VroomApiKeyWebFilter("vroom-access-key");
+        MockServerWebExchange exchange = MockServerWebExchange.from(
+                MockServerHttpRequest.options("/api/market-data/stream")
+                        .header("Origin", "null")
+                        .header("Access-Control-Request-Method", "GET")
                         .build()
         );
 

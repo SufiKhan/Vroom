@@ -1,12 +1,12 @@
-package com.example.trading.vroom.service;
+package com.trading.vroom.service;
 
-import com.example.trading.vroom.domain.LimitOrder;
-import com.example.trading.vroom.domain.MarketTick;
-import com.example.trading.vroom.domain.OrderSide;
-import com.example.trading.vroom.domain.TradeExecution;
-import com.example.trading.vroom.domain.UserAccount;
-import com.example.trading.vroom.ports.AccountRepository;
-import com.example.trading.vroom.ports.OrderBookRepository;
+import com.trading.vroom.domain.LimitOrder;
+import com.trading.vroom.domain.MarketTick;
+import com.trading.vroom.domain.OrderSide;
+import com.trading.vroom.domain.TradeExecution;
+import com.trading.vroom.domain.UserAccount;
+import com.trading.vroom.ports.AccountRepository;
+import com.trading.vroom.ports.OrderBookRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

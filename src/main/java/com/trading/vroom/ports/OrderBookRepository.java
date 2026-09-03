@@ -1,6 +1,6 @@
-package com.example.trading.vroom.ports;
+package com.trading.vroom.ports;
 
-import com.example.trading.vroom.domain.LimitOrder;
+import com.trading.vroom.domain.LimitOrder;
 
 import java.math.BigDecimal;
 import java.util.List;

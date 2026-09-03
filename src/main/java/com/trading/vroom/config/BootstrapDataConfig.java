@@ -1,7 +1,7 @@
-package com.example.trading.vroom.config;
+package com.trading.vroom.config;
 
-import com.example.trading.vroom.domain.UserAccount;
-import com.example.trading.vroom.service.MatchingEngineService;
+import com.trading.vroom.domain.UserAccount;
+import com.trading.vroom.service.MatchingEngineService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

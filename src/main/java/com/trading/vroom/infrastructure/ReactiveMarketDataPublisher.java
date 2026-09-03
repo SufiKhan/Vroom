@@ -1,7 +1,7 @@
-package com.example.trading.vroom.infrastructure;
+package com.trading.vroom.infrastructure;
 
-import com.example.trading.vroom.domain.MarketTick;
-import com.example.trading.vroom.ports.MarketDataPublisher;
+import com.trading.vroom.domain.MarketTick;
+import com.trading.vroom.ports.MarketDataPublisher;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;

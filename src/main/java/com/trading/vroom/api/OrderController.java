@@ -1,11 +1,11 @@
-package com.example.trading.vroom.api;
+package com.trading.vroom.api;
 
-import com.example.trading.vroom.api.dto.AccountResponse;
-import com.example.trading.vroom.api.dto.LimitOrderRequest;
-import com.example.trading.vroom.api.dto.LimitOrderResponse;
-import com.example.trading.vroom.domain.LimitOrder;
-import com.example.trading.vroom.domain.UserAccount;
-import com.example.trading.vroom.service.MatchingEngineService;
+import com.trading.vroom.api.dto.AccountResponse;
+import com.trading.vroom.api.dto.LimitOrderRequest;
+import com.trading.vroom.api.dto.LimitOrderResponse;
+import com.trading.vroom.domain.LimitOrder;
+import com.trading.vroom.domain.UserAccount;
+import com.trading.vroom.service.MatchingEngineService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

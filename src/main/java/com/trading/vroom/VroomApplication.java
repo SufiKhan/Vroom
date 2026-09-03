@@ -1,6 +1,6 @@
-package com.example.trading.vroom;
+package com.trading.vroom;
 
-import com.example.trading.vroom.config.MarketSimulationProperties;
+import com.trading.vroom.config.MarketSimulationProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

@@ -1,6 +1,6 @@
-package com.example.trading.vroom.ports;
+package com.trading.vroom.ports;
 
-import com.example.trading.vroom.domain.MarketTick;
+import com.trading.vroom.domain.MarketTick;
 import reactor.core.publisher.Flux;
 
 public interface MarketDataPublisher {
